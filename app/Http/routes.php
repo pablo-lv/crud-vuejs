@@ -11,6 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+# API
+Route::get('/api/users', function () {
+	return App\User::all();
 });
+
+
+Route::get('/', 'UserController@index');

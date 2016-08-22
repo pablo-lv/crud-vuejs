@@ -12,5 +12,18 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.sass('app.scss');
+
+	var npm_dir = 'node_modules/',
+		js_dir  = 'resources/assets/js';
+
+	mix.copy(npm_dir + 'vue/dist/vue.min.js', js_dir);
+	mix.copy(npm_dir + 'vue-resource/dist/vue-resource.min.js', js_dir);
+	
+
+	mix.scripts([
+		'vue.min.js',
+		'vue-resource.min.js'
+	], 'public/js/vendor.js');
+
+
 });
