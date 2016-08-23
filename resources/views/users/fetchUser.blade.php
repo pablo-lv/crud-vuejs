@@ -29,9 +29,13 @@
 			</div>
 
 			<div class="form-group">
-				<button :disabled="!isValid" class="btn btn-default" type="submit">Add New User</button>
+				<button :disabled="!isValid" v-if="!edit" class="btn btn-default" type="submit">Add New User</button>
+				<button :disabled="!isValid" v-if="edit" @click.prevent="EditUser(newUser.id)" class="btn btn-primary" type="submit">Edit User</button>
 			</div>
 		</form>
+
+		<div class="alert alert-success" transition="success" v-if="success">Add new user successful</div>
+
 		<hr>
 		<table class="table">
 			<thead>
@@ -41,6 +45,7 @@
 				<th>Address</th>
 				<th>Created at</th>
 				<th>Updated at</th>
+				<th>Actions</th>
 			</thead>
 			<tbody>
 				<tr v-for="user in users">
@@ -50,6 +55,10 @@
 					<td>@{{ user.address }}</td>
 					<td>@{{ user.created_at }}</td>
 					<td>@{{ user.updated_at }}</td>
+					<td>
+						<button class="btn btn-default btn-sm" @click="ShowUser(user.id)">Edit</button>
+						<button class="btn btn-danger btn-sm"  @click="RemoveUser(user.id)">remove</button>
+					</td>
 				</tr>
 			</tbody>
 		</table>
@@ -58,4 +67,13 @@
 
 @push('scripts')
 	<script src="/js/script.js"></script>
+
+	<style>
+		.success-transition {
+			transition: all .5s ease-in-out;
+		}
+		.success-enter, .success-leave {
+			opacity: 0
+		}
+	</style>
 @endpush
